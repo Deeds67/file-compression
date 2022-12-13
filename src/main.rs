@@ -31,10 +31,7 @@ fn main() {
     // Decompresses buffer
     let decompressed_bytes = decompress_buffer(compressed_bytes);
 
-    let file_contents = str::from_utf8(&decompressed_bytes).expect("Expected file contents to be string");
-
-
-    println!("File contents, compressed & decompressed {}", file_contents);
+    println!("File contents, compressed & decompressed {}", file_contents_to_string(&decompressed_bytes));
 }
 
 fn read_file(file_name: &String) -> Vec<u8> {
@@ -58,4 +55,8 @@ fn decompress_buffer(buffer: Vec<u8>) -> Vec<u8> {
     let mut buffer = vec![0; buffer.len() as usize];
     d.read(&mut buffer).expect("unable to read back");
     return buffer
+}
+
+fn file_contents_to_string(bytes: &Vec<u8>) -> &str {
+    return str::from_utf8(bytes).expect("Expected file contents to be string");
 }
