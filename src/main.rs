@@ -31,5 +31,7 @@ fn main() {
     let mut d = ZlibDecoder::new(&*compressed_bytes);
     let mut s = String::new();
     d.read_to_string(&mut s).unwrap();
+    let mut buffer = vec![0; metadata.len() as usize];
+    d.read(&mut buffer).expect("unable to read back");
     println!("File contents: {}", s);
 }
