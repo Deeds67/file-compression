@@ -13,6 +13,7 @@ use flate2::read::ZlibDecoder;
 use std::fs::File;
 use std::io::Read;
 use std::str;
+use base64;
 
 fn main() {
     println!("hello there!");
@@ -23,12 +24,17 @@ fn main() {
     // Compresses buffer
     let compressed_bytes = compress_buffer(&buffer);
 
+    // Convert vector to base64 string
+    let base64 = base64::encode(&compressed_bytes);
+    println!("base64 compressed: {}", base64);
+
     // Decompresses buffer
     let decompressed_bytes = decompress_buffer(compressed_bytes);
 
     let file_contents = str::from_utf8(&decompressed_bytes).expect("Expected file contents to be string");
 
-    println!("{}", file_contents);
+
+    println!("File contents, compressed & decompressed {}", file_contents);
 }
 
 fn read_file(file_name: &String) -> Vec<u8> {
